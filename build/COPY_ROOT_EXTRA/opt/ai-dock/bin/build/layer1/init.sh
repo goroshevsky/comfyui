@@ -3,7 +3,12 @@
 # Use this layer to add nodes and models
 
 NODES=(
-    #"https://github.com/ltdrdata/ComfyUI-Manager"
+    "https://github.com/ltdrdata/ComfyUI-Manager"
+    "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
+    "https://github.com/Derfuu/Derfuu_ComfyUI_ModdedNodes"
+    "https://github.com/WASasquatch/was-node-suite-comfyui"
+    "https://github.com/ssitu/ComfyUI_UltimateSDUpscale"
+    "https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID"
 )
 
 CHECKPOINT_MODELS=(
@@ -52,6 +57,7 @@ CONTROLNET_MODELS=(
 ### DO NOT EDIT BELOW HERE UNLESS YOU KNOW WHAT YOU ARE DOING ###
 
 function build_extra_start() {
+    touch /opt/ComfyUI/custom_nodes/skip_download_model
     build_extra_get_nodes
     build_extra_get_models \
         "/opt/storage/stable_diffusion/models/ckpt" \
@@ -86,6 +92,7 @@ function build_extra_get_nodes() {
         dir="${repo##*/}"
         path="/opt/ComfyUI/custom_nodes/${dir}"
         requirements="${path}/requirements.txt"
+        install_script="${path}/install.py"
         if [[ -d $path ]]; then
             if [[ ${AUTO_UPDATE,,} != "false" ]]; then
                 printf "Updating node: %s...\n" "${repo}"
@@ -100,8 +107,20 @@ function build_extra_get_nodes() {
             if [[ -e $requirements ]]; then
                 micromamba -n comfyui run ${PIP_INSTALL} -r "${requirements}"
             fi
+
+            if [[ -e $install_script ]]; then
+                printf "Run install script for $dir"
+                micromamba -n comfyui run python "$install_script"
+            fi
         fi
     done
+
+    micromamba -n comfyui run ${PIP_INSTALL} onnxruntime-gpu omegaconf
+
+    cd /opt/micromamba/envs/comfyui/lib/
+    ln -sf $(ls | grep -P "libnvrtc.so.\d" | head -n 1) libnvrtc.so
+
+    rm -rf /opt/ComfyUI/custom_nodes/ComfyUI-InstantID/models/antelopev2
 }
 
 function build_extra_get_models() {

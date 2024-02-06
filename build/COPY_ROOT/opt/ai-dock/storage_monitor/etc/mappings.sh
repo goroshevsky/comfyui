@@ -15,3 +15,8 @@ storage_map["stable_diffusion/models/vae"]="/opt/ComfyUI/models/vae"
 storage_map["stable_diffusion/models/vae_approx"]="/opt/ComfyUI/models/upscale_models"
 
 # Add more mappings for other repository directories as needed
+storage_map["stable_diffusion/models/rembg"]="/opt/ComfyUI/models/rembg"
+storage_map["stable_diffusion/models/antelopev2"]="/opt/ComfyUI/custom_nodes/ComfyUI-InstantID/models/antelopev2"
+storage_map["stable_diffusion/models/sams"]="/opt/ComfyUI/models/sams"
+storage_map["stable_diffusion/models/ip-adapter"]="/opt/ComfyUI/models/ipadapter"
+storage_map["stable_diffusion/models/ultralytics/bbox"]="/opt/ComfyUI/models/ultralytics/bbox"
