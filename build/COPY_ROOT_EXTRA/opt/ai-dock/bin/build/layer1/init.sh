@@ -9,6 +9,7 @@ NODES=(
     "https://github.com/WASasquatch/was-node-suite-comfyui"
     "https://github.com/ssitu/ComfyUI_UltimateSDUpscale"
     "https://github.com/ZHO-ZHO-ZHO/ComfyUI-InstantID"
+    "https://github.com/zhongpei/ComfyUI-InstructIR"
 )
 
 CHECKPOINT_MODELS=(
@@ -115,7 +116,7 @@ function build_extra_get_nodes() {
         fi
     done
 
-    micromamba -n comfyui run ${PIP_INSTALL} onnxruntime-gpu omegaconf
+    micromamba -n comfyui run ${PIP_INSTALL} onnxruntime-gpu omegaconf sacremoses
 
     cd /opt/micromamba/envs/comfyui/lib/
     ln -sf $(ls | grep -P "libnvrtc.so.\d" | head -n 1) libnvrtc.so

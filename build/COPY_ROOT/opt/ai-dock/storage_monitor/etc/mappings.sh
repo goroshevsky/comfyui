@@ -20,3 +20,4 @@ storage_map["stable_diffusion/models/antelopev2"]="/opt/ComfyUI/custom_nodes/Com
 storage_map["stable_diffusion/models/sams"]="/opt/ComfyUI/models/sams"
 storage_map["stable_diffusion/models/ip-adapter"]="/opt/ComfyUI/models/ipadapter"
 storage_map["stable_diffusion/models/ultralytics/bbox"]="/opt/ComfyUI/models/ultralytics/bbox"
+storage_map["stable_diffusion/models/instructir"]="/opt/ComfyUI/custom_nodes/ComfyUI-InstructIR/model"
