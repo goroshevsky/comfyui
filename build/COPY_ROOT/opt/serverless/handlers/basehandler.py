@@ -157,7 +157,7 @@ class BaseHandler:
                 for image in outputs[item]["images"]:
                     original_path = f"{self.OUTPUT_DIR}{image['subfolder']}/{image['filename']}"
                     new_path = f"{custom_output_dir}/{image['filename']}"
-                    # Handle duplicated request where output file in not re-generated
+                    # Handle duplicated request where output file is not re-generated
                     if os.path.islink(original_path):
                         shutil.copyfile(os.path.realpath(original_path), new_path)
                     else:
@@ -192,8 +192,12 @@ class BaseHandler:
         settings["connect_attempts"] = 1
         return settings
     
+    # Webhook cannot be mandatory. Quick fix
     def invoke_webhook(self, success = False, result = {}, error = ""):
-        webhook_url = self.get_value("webhook_url", os.environ.get("WEBHOOK_URL"))
+        try:
+            webhook_url = self.get_value("webhook_url", os.environ.get("WEBHOOK_URL"))
+        except:
+            return None
         webhook_extra_params = self.get_value("webhook_extra_params", {})
 
         if Network.is_url(webhook_url):
